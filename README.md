@@ -1,6 +1,6 @@
 # Flashcard Generator
 
-A web app\ that uses Google's Gemini AI to generate interactive flashcards for any topic.
+A web app that uses Google's Gemini AI to generate interactive flashcards for any topic.
 
 ## Setup Instructions
 
@@ -32,9 +32,9 @@ You may change the AI model as per your wish but please check the proper documen
 - Each generation creates 5 flashcards
 - Your API key stays locally in your browser
 
-Thank you for checking out my latest but longest project, time wise! This project is my first web project that uses actual AI calls.
+Thank you for checking out my latest yet longest project, time wise! This project is my first web project that uses actual AI calls.
 I learnt a lot from this project, from AI API calls to debugging, parsing and prompting the AI the right way(Debugging wasnt easy mind you ;( )
 I have plans to make a backend for this as well but i am little behind on my backend skills.
 A working backend would allow me to add so many more new features, it will be brilliant!
 
-Anyway, if u liked this project do check out the others. <3
+Anyways, if u liked this project do check out the others. <3
