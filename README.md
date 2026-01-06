@@ -23,3 +23,6 @@ Generate educational flashcards using Google's Gemini AI.
 
 ## Getting an API Key
 Get a free Gemini API key: https://makersuite.google.com/app/apikey
+
+###PS:
+Thank you for checking out my first full stack project. Learnt a whole lot building this but there is always more to learn and implement. 
