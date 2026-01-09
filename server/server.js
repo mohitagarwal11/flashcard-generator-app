@@ -11,7 +11,7 @@ app.use(express.json());
 
 app.post("/api/generate-flashcards", async (req, res) => {
   try {
-    const { topic, numberOfCards = 5 } = req.body;
+    const { topic } = req.body;
 
     console.log("Generating flashcards for:", topic);
 
@@ -22,21 +22,22 @@ app.post("/api/generate-flashcards", async (req, res) => {
       });
     }
 
+    const totalCards = 15;
     const prompt = `
 You are a flashcard generator.
 
-Based on the following user request, create exactly ${numberOfCards} flashcards.
+Based on the following user request, create exactly ${totalCards} flashcards.
 
 User request: "${topic}"
 
 Each flashcard MUST be formatted exactly like this:
 
 Q: [clear and concise question]
-A: [accurate,concise and educational answer]
+A: [accurate, concise and educational answer]
 
-Continue this pattern for ${numberOfCards} flashcards.
+Continue this pattern for ${totalCards} flashcards.
 Do NOT add numbering, bullet points, or extra text before or after the cards.
-Just output the ${numberOfCards} Q/A pairs in that format.
+Just output the ${totalCards} Q/A pairs in that format.
 `;
 
     const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
@@ -59,31 +60,26 @@ Just output the ${numberOfCards} Q/A pairs in that format.
         ],
         generationConfig: {
           temperature: 0.7,
-          maxOutputTokens: 1000,
+          maxOutputTokens: 2000,
         },
       }),
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(
-        `Gemini API error: ${response.status} - ${JSON.stringify(errorData)}`
-      );
+      throw new Error(`Gemini API error: ${response.status}`);
     }
 
     const data = await response.json();
 
     if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
       const generatedText = data.candidates[0].content.parts[0].text;
-
-      const flashcards = parseFlashcards(generatedText);
+      const allFlashcards = parseFlashcards(generatedText);
 
       res.json({
         success: true,
-        flashcards: flashcards,
+        flashcards: allFlashcards,
+        totalGenerated: allFlashcards.length,
       });
-    } else if (data.error) {
-      throw new Error(`Gemini error: ${data.error.message}`);
     } else {
       throw new Error("Invalid response from Gemini API");
     }
